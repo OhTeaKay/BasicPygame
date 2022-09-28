@@ -16,7 +16,8 @@ text_surface = test_font.render("Score:", False, "#007697")
 text_rectangle = text_surface.get_rect(midbottom = (475,100))
 player_surface = pygame.image.load("Graphics/Rust_Crab.png").convert_alpha()
 player_rectangle = player_surface.get_rect(midbottom = (80,461))
-
+player_rectangle.update(100,0,40,30)
+   
 enemy_surface = pygame.image.load("Graphics/docker_logo.png").convert_alpha()
 
 enemy_rectangle = enemy_surface.get_rect(midbottom = (1000,450))
@@ -28,9 +29,6 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if player_rectangle.collidepoint(event.pos):
-                gravity_value = -20
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 gravity_value = -20
@@ -50,8 +48,8 @@ while True:
     gravity_value += 1
     player_rectangle.y += gravity_value;
     
-    if player_rectangle.y >= 450:
-        player_rectangle.y = 350
+    if player_rectangle.bottom >= 405:
+        player_rectangle.bottom = 405  
         gravity_value = 0;
     
     enemy_rectangle.x -= 8
@@ -59,8 +57,8 @@ while True:
     if enemy_rectangle.x <= -300:
          enemy_rectangle.x = 1000
          
-    #if player_rectangle.colliderect(enemy_rectangle):
-    #   break
+    if player_rectangle.colliderect(enemy_rectangle):
+       pygame.time.wait(5000)
          
     screen.blit(enemy_surface,enemy_rectangle)
     

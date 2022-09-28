@@ -1,4 +1,11 @@
 {
     "workbench.colorTheme": "Ayu Mirage",
-    "workbench.iconTheme": "vs-seti"
+    "workbench.iconTheme": "vs-seti",
+
+    "workbench.colorCustomizations": {
+        "editorCursor.foreground": "#93140e",
+        "terminalCursor.foreground": "#ffff00"
+    }
 }
+
+
