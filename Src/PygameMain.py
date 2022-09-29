@@ -1,4 +1,5 @@
 from cgi import test
+from tkinter import BOTTOM
 import pygame
 from sys import exit
 
@@ -21,16 +22,15 @@ player_rectangle.update(100,0,40,30)
 enemy_surface = pygame.image.load("Graphics/docker_logo.png").convert_alpha()
 
 enemy_rectangle = enemy_surface.get_rect(midbottom = (1000,450))
-gravity_value = 0
+gravity_value = 10
 
 while True:
-   
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.K_SPACE and player_rectangle.bottom >= 405:
                 gravity_value = -20
                 
     screen.blit(background_surface,(0,0))
@@ -40,18 +40,16 @@ while True:
     pygame.draw.rect(screen,"#005484",text_rectangle,15)
     
     #pygame.draw.line(screen,"Gold",(0,0),pygame.mouse.get_pos(),10)
-    
+
     screen.blit(text_surface,text_rectangle)
-    
-    
     screen.blit(player_surface,player_rectangle)
+    
     gravity_value += 1
     player_rectangle.y += gravity_value;
     
     if player_rectangle.bottom >= 405:
         player_rectangle.bottom = 405  
-        gravity_value = 0;
-    
+        
     enemy_rectangle.x -= 8
         
     if enemy_rectangle.x <= -300:
