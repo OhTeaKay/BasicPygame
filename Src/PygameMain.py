@@ -8,6 +8,7 @@ screen = pygame.display.set_mode((950,536))
 pygame.display.set_caption("Runner")
 clock = pygame.time.Clock()
 test_font = pygame.font.Font("Fonts/MinecraftTen-VGORe.ttf", 50)
+game_active = True
 
 background_surface = pygame.image.load("Graphics/Ocean_fish_background.png").convert()
 ground_surface = pygame.image.load("Graphics/Ground_Surface.png").convert()
@@ -32,34 +33,35 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and player_rectangle.bottom >= 405:
                 gravity_value = -20
-                
-    screen.blit(background_surface,(0,0))
-    screen.blit(ground_surface,(0,450))
-    
-    pygame.draw.rect(screen,"#005484",text_rectangle)
-    pygame.draw.rect(screen,"#005484",text_rectangle,15)
-    
-    #pygame.draw.line(screen,"Gold",(0,0),pygame.mouse.get_pos(),10)
+    if game_active:
+        screen.blit(background_surface,(0,0))
+        screen.blit(ground_surface,(0,450))
+        
+        pygame.draw.rect(screen,"#005484",text_rectangle)
+        pygame.draw.rect(screen,"#005484",text_rectangle,15)
+        
+        #pygame.draw.line(screen,"Gold",(0,0),pygame.mouse.get_pos(),10)
 
-    screen.blit(text_surface,text_rectangle)
-    screen.blit(player_surface,player_rectangle)
-    
-    gravity_value += 1
-    player_rectangle.y += gravity_value;
-    
-    if player_rectangle.bottom >= 405:
-        player_rectangle.bottom = 405  
+        screen.blit(text_surface,text_rectangle)
+        screen.blit(player_surface,player_rectangle)
         
-    enemy_rectangle.x -= 8
+        gravity_value += 1
+        player_rectangle.y += gravity_value;
         
-    if enemy_rectangle.x <= -300:
-         enemy_rectangle.x = 1000
-         
-    if player_rectangle.colliderect(enemy_rectangle):
-       pygame.time.wait(5000)
-         
-    screen.blit(enemy_surface,enemy_rectangle)
-    
-    
+        if player_rectangle.bottom >= 405:
+            player_rectangle.bottom = 405  
+            
+        enemy_rectangle.x -= 8
+            
+        if enemy_rectangle.x <= -300:
+            enemy_rectangle.x = 1000
+            
+        if enemy_rectangle.colliderect(player_rectangle):
+            game_active = False
+            
+        screen.blit(enemy_surface,enemy_rectangle)
+    else:
+        screen.fill("Yellow")
+        
     pygame.display.update()
     clock.tick(60)
